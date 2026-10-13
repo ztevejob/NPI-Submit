@@ -26,51 +26,100 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 30px 20px 100px 20px;
-            -webkit-font-smoothing: antialiased;
             display: flex;
-            justify-content: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            width: 100%;
-            max-width: 960px;
+        /* Desktop Sidebar Layout */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--card-border);
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            height: 100vh;
+            box-sizing: border-box;
+            z-index: 100;
         }
 
-        .header-area {
-            text-align: center;
-            margin-bottom: 35px;
-            padding-top: 10px;
-        }
-
-        .badge {
+        .sidebar-header .badge {
             display: inline-block;
             background-color: rgba(0, 113, 227, 0.1);
             color: var(--primary);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             border-radius: 20px;
             margin-bottom: 12px;
         }
 
-        h2 {
-            font-size: 28px;
+        .sidebar-header h2 {
+            font-size: 22px;
             font-weight: 700;
             margin: 0 0 6px 0;
-            color: var(--text-main);
             letter-spacing: -0.5px;
         }
 
-        .subtitle {
+        .sidebar-header .subtitle {
             color: var(--text-secondary);
-            font-size: 15px;
+            font-size: 13px;
             margin: 0;
+            line-height: 1.4;
         }
 
-        /* Desktop Grid Layout: Kotak per Kotak (2 Kolom) */
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            color: var(--primary);
+            background: rgba(0, 113, 227, 0.08);
+        }
+
+        /* Main Content Area (Desktop) */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+            box-sizing: border-box;
+            max-width: 900px;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -206,28 +255,29 @@
             background: rgba(0, 113, 227, 0.2);
         }
 
-        /* Mobile Bottom Dock (Hidden by default on Desktop) */
         .mobile-dock {
             display: none;
         }
 
         .footer {
-            text-align: center;
             font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 40px;
-            border-top: 1px solid rgba(210, 210, 215, 0.4);
-            padding-top: 20px;
+            margin-top: 20px;
         }
 
         /* Responsive Breakpoint untuk layar HP */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px 16px 110px 16px;
+                width: 100%;
+            }
             .grid-container {
                 grid-template-columns: 1fr;
                 gap: 16px;
-            }
-            body {
-                padding: 20px 16px 110px 16px;
             }
             .mobile-dock {
                 position: fixed;
@@ -281,13 +331,44 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="header-area">
-        <span class="badge">Trainers NPI Portal 2026</span>
-        <h2>NPI & Approval Portal</h2>
-        <p class="subtitle">Submission Report, Keynote NPI, & Approval Curtain</p>
+<!-- Desktop Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <span class="badge">Trainers Portal 2026</span>
+        <h2>NPI & Approval</h2>
+        <p class="subtitle">Portal Submission, Keynote, & Approval Curtain</p>
     </div>
+    
+    <nav class="sidebar-nav">
+        <button class="nav-item active" onclick="showSection('home', this)">
+            <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Home (Semua Menu)
+        </button>
+        <button class="nav-item" onclick="showSection('section-box', this)">
+            <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            Tim Apple Box
+        </button>
+        <button class="nav-item" onclick="showSection('section-ho', this)">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            Trainer HO Folder
+        </button>
+        <button class="nav-item" onclick="showSection('section-curtain', this)">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Approval Curtain
+        </button>
+        <button class="nav-item" onclick="showSection('section-guide', this)">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Guidelines & Template
+        </button>
+    </nav>
 
+    <div class="footer">
+        &copy; 2026 Trainers. All rights reserved.[cite: 1]
+    </div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="main-content">
     <!-- Layout Grid: Kotak per Kotak -->
     <div class="grid-container" id="gridContainer">
         <!-- Kotak 1: Tim Apple (Monobrand Box Report) -->
@@ -358,13 +439,9 @@
             </div>
         </div>
     </div>
+</main>
 
-    <div class="footer">
-        &copy; 2026 Trainers. All rights reserved.[cite: 1]
-    </div>
-</div>
-
-<!-- Floating Mobile Dock (Bottom Navigation) dengan Menu Home -->
+<!-- Floating Mobile Dock (Hanya muncul di perangkat mobile) -->
 <nav class="mobile-dock">
     <button class="dock-item active" onclick="showSection('home', this)">
         <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -409,11 +486,29 @@
     }
 
     function showSection(sectionId, element) {
-        // Atur status aktif pada dock item
-        document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
-        element.classList.add('active');
+        // Sinkronisasi status aktif antara sidebar (desktop) dan dock (mobile)
+        if (element.classList.contains('nav-item')) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.dock-item').forEach(item => {
+                if(item.innerText.trim().toLowerCase() === element.innerText.trim().toLowerCase()) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        } else {
+            document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if(item.innerText.trim().toLowerCase() === element.innerText.trim().toLowerCase()) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            element.classList.add('active');
+        }
 
-        // Logika tampilan menu di HP
+        // Logika tampil/sembunyikan kartu menu
         const cards = document.querySelectorAll('.menu-card');
         if (sectionId === 'home') {
             cards.forEach(card => card.style.display = 'flex');
