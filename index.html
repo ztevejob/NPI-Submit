@@ -83,7 +83,6 @@
             border: 1px solid var(--card-border);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-subtle);
-            scroll-margin-top: 30px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -207,7 +206,7 @@
             background: rgba(0, 113, 227, 0.2);
         }
 
-        /* Mobile Bottom Dock (Hanya aktif di layar kecil/mobile) */
+        /* Mobile Bottom Dock (Hidden by default on Desktop) */
         .mobile-dock {
             display: none;
         }
@@ -261,6 +260,9 @@
                 border-radius: 14px;
                 transition: all 0.2s ease;
                 flex: 1;
+                cursor: pointer;
+                background: transparent;
+                border: none;
             }
             .dock-item svg {
                 width: 20px;
@@ -287,9 +289,9 @@
     </div>
 
     <!-- Layout Grid: Kotak per Kotak -->
-    <div class="grid-container">
+    <div class="grid-container" id="gridContainer">
         <!-- Kotak 1: Tim Apple (Monobrand Box Report) -->
-        <div id="section-box" class="section-group">
+        <div id="section-box" class="section-group menu-card">
             <div>
                 <div class="section-title">🍎 Tim Apple: Monobrand Box Report</div>
                 <div class="info-text">Unggah laporan berkala sesuai kategori outlet Anda ke platform resmi Box Apple.</div>
@@ -309,7 +311,7 @@
         </div>
 
         <!-- Kotak 2: Trainer HO Folder -->
-        <div id="section-ho" class="section-group">
+        <div id="section-ho" class="section-group menu-card">
             <div>
                 <div class="section-title">📊 Trainer HO Folder</div>
                 <div class="info-text">Folder khusus pengumpulan Keynote NPI dan berkas koordinasi ke Trainer Head Office[cite: 1].</div>
@@ -323,7 +325,7 @@
         </div>
 
         <!-- Kotak 3: Approval Curtain -->
-        <div id="section-curtain" class="section-group">
+        <div id="section-curtain" class="section-group menu-card">
             <div>
                 <div class="section-title">🛡️ Approval Curtain</div>
                 <div class="info-text">Proses persetujuan (approval) visual dan standar penutupan display (kain hitam) biar saat melakukan perubahan demo unit tidak terlihat dari luar sebelum peluncuran produk baru.</div>
@@ -337,7 +339,7 @@
         </div>
 
         <!-- Kotak 4: Guidelines (incl. reporting template) -->
-        <div id="section-guide" class="section-group">
+        <div id="section-guide" class="section-group menu-card">
             <div>
                 <div class="section-title">📦 Guidelines & Template</div>
                 <div class="info-text">Akses panduan dan template pelaporan resmi melalui Box Apple menggunakan password di bawah ini.</div>
@@ -362,24 +364,28 @@
     </div>
 </div>
 
-<!-- Floating Mobile Dock (Hanya muncul di perangkat mobile) -->
+<!-- Floating Mobile Dock (Bottom Navigation) dengan Menu Home -->
 <nav class="mobile-dock">
-    <a href="#section-box" class="dock-item active" onclick="setActive(this)">
+    <button class="dock-item active" onclick="showSection('home', this)">
+        <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Home
+    </button>
+    <button class="dock-item" onclick="showSection('section-box', this)">
         <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
         Box
-    </a>
-    <a href="#section-ho" class="dock-item" onclick="setActive(this)">
+    </button>
+    <button class="dock-item" onclick="showSection('section-ho', this)">
         <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         HO
-    </a>
-    <a href="#section-curtain" class="dock-item" onclick="setActive(this)">
+    </button>
+    <button class="dock-item" onclick="showSection('section-curtain', this)">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
         Curtain
-    </a>
-    <a href="#section-guide" class="dock-item" onclick="setActive(this)">
+    </button>
+    <button class="dock-item" onclick="showSection('section-guide', this)">
         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         Guide
-    </a>
+    </button>
 </nav>
 
 <script>
@@ -402,9 +408,24 @@
         });
     }
 
-    function setActive(element) {
+    function showSection(sectionId, element) {
+        // Atur status aktif pada dock item
         document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
         element.classList.add('active');
+
+        // Logika tampilan menu di HP
+        const cards = document.querySelectorAll('.menu-card');
+        if (sectionId === 'home') {
+            cards.forEach(card => card.style.display = 'flex');
+        } else {
+            cards.forEach(card => {
+                if (card.id === sectionId) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     }
 </script>
 
