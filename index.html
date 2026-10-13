@@ -2,175 +2,385 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal NPI (New Product Introduction) & Approval Curtain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NPI & Approval Portal | Trainers Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0071e3;
+            --primary: #0071e3;
             --primary-hover: #0077ed;
             --bg-color: #f5f5f7;
             --card-bg: #ffffff;
+            --card-border: rgba(210, 210, 215, 0.6);
             --text-main: #1d1d1f;
             --text-secondary: #86868b;
-            --border-color: #d2d2d7;
-            --radius: 12px;
+            --accent-bg: #fafafa;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 12px 30px rgba(0, 113, 227, 0.08);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px 100px 20px;
+            -webkit-font-smoothing: antialiased;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
 
         .container {
             width: 100%;
-            max-width: 600px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            max-width: 960px;
+        }
+
+        .header-area {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-top: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(0, 113, 227, 0.1);
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
         }
 
         h2 {
-            text-align: center;
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
             color: var(--text-main);
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            text-align: center;
             color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 30px;
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* Desktop Grid Layout: Kotak per Kotak (2 Kolom) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
         .section-group {
-            margin-bottom: 24px;
-            padding: 20px;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            background-color: #fafafa;
+            padding: 24px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
+            scroll-margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-group:hover {
+            border-color: rgba(0, 113, 227, 0.4);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
         }
 
         .section-title {
             font-weight: 600;
             font-size: 16px;
-            margin-bottom: 12px;
-            color: var(--primary-color);
+            margin-bottom: 10px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+            flex-grow: 1;
         }
 
         label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 6px;
-            color: var(--text-main);
+            color: var(--text-secondary);
         }
 
         select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 1px solid #d2d2d7;
+            border-radius: 10px;
             font-size: 14px;
             background-color: #fff;
+            color: var(--text-main);
             box-sizing: border-box;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            cursor: pointer;
         }
 
         select:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
         }
 
         .btn {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
+            padding: 12px 16px;
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             text-align: center;
             text-decoration: none;
-            transition: background-color 0.2s ease;
             box-sizing: border-box;
+            gap: 8px;
+            transition: background-color 0.2s;
         }
 
         .btn:hover {
             background-color: var(--primary-hover);
         }
 
-        .info-text {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: -10px;
-            margin-bottom: 15px;
+        .password-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--accent-bg);
+            border: 1px solid #d2d2d7;
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+
+        .password-text {
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .btn-copy {
+            background: rgba(0, 113, 227, 0.1);
+            color: var(--primary);
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: rgba(0, 113, 227, 0.2);
+        }
+
+        /* Mobile Bottom Dock (Hanya aktif di layar kecil/mobile) */
+        .mobile-dock {
+            display: none;
         }
 
         .footer {
             text-align: center;
             font-size: 12px;
             color: var(--text-secondary);
-            margin-top: 25px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(210, 210, 215, 0.4);
+            padding-top: 20px;
+        }
+
+        /* Responsive Breakpoint untuk layar HP */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            body {
+                padding: 20px 16px 110px 16px;
+            }
+            .mobile-dock {
+                position: fixed;
+                bottom: 16px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 32px);
+                max-width: 460px;
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(210, 210, 215, 0.6);
+                border-radius: 24px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+                z-index: 1000;
+            }
+            .dock-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: var(--text-secondary);
+                font-size: 10px;
+                font-weight: 500;
+                padding: 6px 8px;
+                border-radius: 14px;
+                transition: all 0.2s ease;
+                flex: 1;
+            }
+            .dock-item svg {
+                width: 20px;
+                height: 20px;
+                margin-bottom: 3px;
+                stroke: currentColor;
+                stroke-width: 2;
+                fill: none;
+            }
+            .dock-item.active, .dock-item:hover {
+                color: var(--primary);
+                background: rgba(0, 113, 227, 0.08);
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>NPI & Approval Portal</h2>
-    <div class="subtitle">Submission Report, Keynote NPI, & Approval Curtain</div>
-
-    <!-- Bagian 1: Tim Apple (Monobrand Box Report) -->
-    <div class="section-group">
-        <div class="section-title">🍎 Tim Apple: Monobrand Box Report Submission</div>
-        
-        <label for="categorySelect">Pilih Kategori Outlet:</label>
-        <select id="categorySelect">
-            <option value="https://apple.ent.box.com/f/66306ae15c694a7f981b2566ce78a5b9">APP / APR (Apple Premium Partner / Reseller)</option>
-            <option value="https://apple.ent.box.com/f/41b5f98bb8ac49b2b0eb4bd42480ac95">Mono AAR (Apple Authorized Reseller)</option>
-        </select>
-        <div class="info-text">Anda akan diarahkan langsung ke folder Box resmi sesuai kategori.</div>
-
-        <button type="button" class="btn" onclick="openBoxLink()">Buka Link Box Submission</button>
+    <div class="header-area">
+        <span class="badge">Trainers NPI Portal 2026</span>
+        <h2>NPI & Approval Portal</h2>
+        <p class="subtitle">Submission Report, Keynote NPI, & Approval Curtain</p>
     </div>
 
-    <!-- Bagian 2: Submit Keynote NPI HO -->
-    <div class="section-group">
-        <div class="section-title">📊 Head Office (HO): Submit Keynote NPI (OKT 2026)</div>
-        <div class="info-text" style="margin-top: 0; margin-bottom: 15px;">
-            Akses folder Google Drive baru untuk pengumpulan Keynote NPI periode Oktober 2026 ke HO.
-        </div>
-        
-        <a href="https://drive.google.com/drive/folders/1MkrbQIsxlVvrTt7EjweumAgfVG8ti2FP?usp=sharing" target="_blank" class="btn">Buka Folder Google Drive HO</a>
-    </div>
+    <!-- Layout Grid: Kotak per Kotak -->
+    <div class="grid-container">
+        <!-- Kotak 1: Tim Apple (Monobrand Box Report) -->
+        <div id="section-box" class="section-group">
+            <div>
+                <div class="section-title">🍎 Tim Apple: Monobrand Box Report</div>
+                <div class="info-text">Unggah laporan berkala sesuai kategori outlet Anda ke platform resmi Box Apple.</div>
+            </div>
+            <div>
+                <label for="categorySelect">Pilih Kategori Outlet:</label>
+                <select id="categorySelect">
+                    <option value="https://apple.ent.box.com/f/66306ae15c694a7f981b2566ce78a5b9">APP / APR (Apple Premium Partner / Reseller)</option>
+                    <option value="https://apple.ent.box.com/f/41b5f98bb8ac49b2b0eb4bd42480ac95">Mono AAR (Apple Authorized Reseller)</option>
+                </select>
 
-    <!-- Bagian 3: Approval Curtain -->
-    <div class="section-group">
-        <div class="section-title">🛡️ Approval Curtain</div>
-        <div class="info-text" style="margin-top: 0; margin-bottom: 15px;">
-            Akses folder Google Drive khusus untuk keperluan Approval Curtain.
+                <button type="button" class="btn" onclick="openBoxLink()">
+                    Buka Link Box Submission
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </button>
+            </div>
         </div>
-        
-        <a href="https://drive.google.com/drive/folders/1bG_is2lQ0xV47K3tfviWMga7TaGx0Vb8?usp=sharing" target="_blank" class="btn">Buka Folder Approval Curtain</a>
+
+        <!-- Kotak 2: Trainer HO Folder -->
+        <div id="section-ho" class="section-group">
+            <div>
+                <div class="section-title">📊 Trainer HO Folder</div>
+                <div class="info-text">Folder khusus pengumpulan Keynote NPI dan berkas koordinasi ke Trainer Head Office[cite: 1].</div>
+            </div>
+            <div>
+                <a href="https://drive.google.com/drive/folders/1MkrbQIsxlVvrTt7EjweumAgfVG8ti2FP?usp=sharing" target="_blank" class="btn">
+                    Buka Trainer HO Folder
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Kotak 3: Approval Curtain -->
+        <div id="section-curtain" class="section-group">
+            <div>
+                <div class="section-title">🛡️ Approval Curtain</div>
+                <div class="info-text">Proses persetujuan (approval) visual dan standar penutupan display (kain hitam) biar saat melakukan perubahan demo unit tidak terlihat dari luar sebelum peluncuran produk baru.</div>
+            </div>
+            <div>
+                <a href="https://drive.google.com/drive/folders/1bG_is2lQ0xV47K3tfviWMga7TaGx0Vb8?usp=sharing" target="_blank" class="btn">
+                    Buka Approval Curtain
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Kotak 4: Guidelines (incl. reporting template) -->
+        <div id="section-guide" class="section-group">
+            <div>
+                <div class="section-title">📦 Guidelines & Template</div>
+                <div class="info-text">Akses panduan dan template pelaporan resmi melalui Box Apple menggunakan password di bawah ini.</div>
+            </div>
+            <div>
+                <label>Password Akses:</label>
+                <div class="password-container">
+                    <span class="password-text" id="pwdText">NPIFALL2026</span>
+                    <button type="button" class="btn-copy" onclick="copyPassword()">Salin</button>
+                </div>
+                
+                <a href="https://apple.box.com/s/24ety3fj2hyzywpx5ue2eaura7pmeem2" target="_blank" class="btn">
+                    Buka Apple Box Guidelines
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
     </div>
 
     <div class="footer">
-        &copy; 2026 Trainers. All rights reserved.
+        &copy; 2026 Trainers. All rights reserved.[cite: 1]
     </div>
 </div>
+
+<!-- Floating Mobile Dock (Hanya muncul di perangkat mobile) -->
+<nav class="mobile-dock">
+    <a href="#section-box" class="dock-item active" onclick="setActive(this)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        Box
+    </a>
+    <a href="#section-ho" class="dock-item" onclick="setActive(this)">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        HO
+    </a>
+    <a href="#section-curtain" class="dock-item" onclick="setActive(this)">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Curtain
+    </a>
+    <a href="#section-guide" class="dock-item" onclick="setActive(this)">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Guide
+    </a>
+</nav>
 
 <script>
     function openBoxLink() {
@@ -179,6 +389,22 @@
         if (selectedUrl) {
             window.open(selectedUrl, '_blank');
         }
+    }
+
+    function copyPassword() {
+        const pwd = document.getElementById('pwdText').innerText;
+        navigator.clipboard.writeText(pwd).then(() => {
+            const btn = document.querySelector('.btn-copy');
+            btn.innerText = 'Disalin!';
+            setTimeout(() => {
+                btn.innerText = 'Salin';
+            }, 2000);
+        });
+    }
+
+    function setActive(element) {
+        document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
     }
 </script>
 
