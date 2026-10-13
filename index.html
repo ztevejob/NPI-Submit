@@ -111,13 +111,73 @@
             background: rgba(0, 113, 227, 0.08);
         }
 
-        /* Main Content Area (Desktop) */
+        /* Main Content Area */
         .main-content {
             margin-left: 280px;
             flex: 1;
             padding: 40px;
             box-sizing: border-box;
-            max-width: 900px;
+            max-width: 1000px;
+        }
+
+        /* Weather Widget Styles */
+        .weather-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .weather-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .weather-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .weather-temp {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Motivation Card (Home View) */
+        .home-motivation {
+            display: block;
+            background: linear-gradient(135deg, #0071e3 0%, #42a5f5 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 20px;
+        }
+
+        .home-motivation h3 {
+            font-size: 26px;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+        }
+
+        .home-motivation p {
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .grid-container {
@@ -342,7 +402,7 @@
     <nav class="sidebar-nav">
         <button class="nav-item active" onclick="showSection('home', this)">
             <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            Home (Semua Menu)
+            Home / Ringkasan
         </button>
         <button class="nav-item" onclick="showSection('section-box', this)">
             <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -369,6 +429,21 @@
 
 <!-- Main Content Area -->
 <main class="main-content">
+    <!-- Widget Cuaca Surabaya -->
+    <div class="weather-widget">
+        <div class="weather-info">
+            <h4>📍 Surabaya, Jawa Timur</h4>
+            <p>Sebagian berawan • Kelembapan 50%</p>
+        </div>
+        <div class="weather-temp">32°C</div>
+    </div>
+
+    <!-- Kartu Motivasi untuk Semua Karyawan (Home View) -->
+    <div id="homeMotivationCard" class="home-motivation">
+        <h3>🚀 Semangat untuk Seluruh Tim & Karyawan Hebat!</h3>
+        <p>Setiap dari kita memegang peran penting dalam keseruan peluncuran produk baru ini. Mari kita satukan energi, berikan pelayanan terbaik dengan penuh senyum kepada setiap pelanggan yang datang, dan buktikan bahwa kerja keras dan kerja sama tim kita selalu membawa hasil yang membanggakan. Info submit lengkap dapat diakses langsung melalui menu-menu yang tersedia di portal ini. Langkah kecil Anda hari ini adalah awal dari pencapaian besar kita bersama. Mari kita buat hari ini menjadi luar biasa!</p>
+    </div>
+
     <!-- Layout Grid: Kotak per Kotak -->
     <div class="grid-container" id="gridContainer">
         <!-- Kotak 1: Tim Apple (Monobrand Box Report) -->
@@ -486,20 +561,22 @@
     }
 
     function showSection(sectionId, element) {
-        // Sinkronisasi status aktif antara sidebar (desktop) dan dock (mobile)
         if (element.classList.contains('nav-item')) {
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.dock-item').forEach(item => {
-                if(item.innerText.trim().toLowerCase() === element.innerText.trim().toLowerCase()) {
+                if(item.innerText.trim().toLowerCase() === element.innerText.trim().toLowerCase().split('/')[0].trim()) {
                     item.classList.add('active');
                 } else {
                     item.classList.remove('active');
                 }
             });
+            element.classList.add('active');
         } else {
             document.querySelectorAll('.dock-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => {
-                if(item.innerText.trim().toLowerCase() === element.innerText.trim().toLowerCase()) {
+                const navText = item.innerText.trim().toLowerCase();
+                const btnText = element.innerText.trim().toLowerCase();
+                if(navText.includes(btnText) || (btnText === 'home' && navText.includes('home'))) {
                     item.classList.add('active');
                 } else {
                     item.classList.remove('active');
@@ -508,11 +585,14 @@
             element.classList.add('active');
         }
 
-        // Logika tampil/sembunyikan kartu menu
         const cards = document.querySelectorAll('.menu-card');
+        const motivationCard = document.getElementById('homeMotivationCard');
+
         if (sectionId === 'home') {
-            cards.forEach(card => card.style.display = 'flex');
+            motivationCard.style.display = 'block';
+            cards.forEach(card => card.style.display = 'none');
         } else {
+            motivationCard.style.display = 'none';
             cards.forEach(card => {
                 if (card.id === sectionId) {
                     card.style.display = 'flex';
@@ -522,6 +602,10 @@
             });
         }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.menu-card').forEach(card => card.style.display = 'none');
+    });
 </script>
 
 </body>
