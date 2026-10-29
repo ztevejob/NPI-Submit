@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NPI & Approval Portal | Trainers Portal</title>
+    <title>NPI & Portal Submission | Trainers Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -252,30 +252,6 @@
             color: var(--text-secondary);
         }
 
-        select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #d2d2d7;
-            border-radius: 10px;
-            font-size: 14px;
-            background-color: #fff;
-            color: var(--text-main);
-            box-sizing: border-box;
-            margin-bottom: 14px;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            background-size: 16px;
-            cursor: pointer;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
-        }
-
         .btn {
             display: flex;
             justify-content: center;
@@ -415,8 +391,8 @@
 <aside class="sidebar">
     <div class="sidebar-header">
         <span class="badge">Trainers Portal 2026</span>
-        <h2>NPI & Approval</h2>
-        <p class="subtitle">Portal Submission, Keynote, & Approval Curtain</p>
+        <h2>NPI & Submission</h2>
+        <p class="subtitle">Portal Submission, Keynote, & Guidelines</p>
     </div>
     
     <nav class="sidebar-nav">
@@ -431,10 +407,6 @@
         <button class="nav-item" onclick="showSection('section-ho', this)">
             <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             Trainer HO Folder
-        </button>
-        <button class="nav-item" onclick="showSection('section-curtain', this)">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            Approval Curtain
         </button>
         <button class="nav-item" onclick="showSection('section-guide', this)">
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
@@ -471,27 +443,35 @@
 
     <!-- Layout Grid: Kotak per Kotak -->
     <div class="grid-container" id="gridContainer">
-        <!-- Kotak 1: Tim Apple (Monobrand Box Report) -->
+        
+        <!-- DUA KOTAK TIM APPLE BERDAMPINGAN (SIDE BY SIDE) -->
         <div id="section-box" class="section-group menu-card">
             <div>
-                <div class="section-title">🍎 Tim Apple: Monobrand Box Report</div>
-                <div class="info-text">Unggah laporan berkala sesuai kategori outlet Anda ke platform resmi Box Apple.</div>
+                <div class="section-title">🍎 Tim Apple (APP / APR)</div>
+                <div class="info-text">Unggah laporan khusus untuk outlet kategori Apple Premium Partner (APP) & Apple Premium Reseller (APR).</div>
             </div>
             <div>
-                <label for="categorySelect">Pilih Kategori Outlet:</label>
-                <select id="categorySelect">
-                    <option value="https://apple.ent.box.com/f/66306ae15c694a7f981b2566ce78a5b9">APP / APR (Apple Premium Partner / Reseller)</option>
-                    <option value="https://apple.ent.box.com/f/41b5f98bb8ac49b2b0eb4bd42480ac95">Mono AAR (Apple Authorized Reseller)</option>
-                </select>
-
-                <button type="button" class="btn" onclick="openBoxLink()">
-                    Buka Link Box Submission
+                <a href="https://apple.ent.box.com/f/66306ae15c694a7f981b2566ce78a5b9" target="_blank" class="btn">
+                    Submit APP / APR
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </button>
+                </a>
             </div>
         </div>
 
-        <!-- Kotak 2: Trainer HO Folder -->
+        <div id="section-box-aar" class="section-group menu-card">
+            <div>
+                <div class="section-title">🍎 Tim Apple (Mono AAR)</div>
+                <div class="info-text">Unggah laporan khusus untuk outlet kategori Monobrand Apple Authorized Reseller (AAR).</div>
+            </div>
+            <div>
+                <a href="https://apple.ent.box.com/f/41b5f98bb8ac49b2b0eb4bd42480ac95" target="_blank" class="btn">
+                    Submit Mono AAR
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Kotak Trainer HO Folder -->
         <div id="section-ho" class="section-group menu-card">
             <div>
                 <div class="section-title">📊 Trainer HO Folder</div>
@@ -505,21 +485,7 @@
             </div>
         </div>
 
-        <!-- Kotak 3: Approval Curtain -->
-        <div id="section-curtain" class="section-group menu-card">
-            <div>
-                <div class="section-title">🛡️ Approval Curtain</div>
-                <div class="info-text">Proses persetujuan (approval) visual dan standar penutupan display (kain hitam) biar saat melakukan perubahan demo unit tidak terlihat dari luar sebelum peluncuran produk baru.</div>
-            </div>
-            <div>
-                <a href="https://drive.google.com/drive/folders/1bG_is2lQ0xV47K3tfviWMga7TaGx0Vb8?usp=sharing" target="_blank" class="btn">
-                    Buka Approval Curtain
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
-            </div>
-        </div>
-
-        <!-- Kotak 4: Guidelines (incl. reporting template) -->
+        <!-- Kotak Guidelines & Template -->
         <div id="section-guide" class="section-group menu-card">
             <div>
                 <div class="section-title">📦 Guidelines & Template</div>
@@ -538,10 +504,11 @@
                 </a>
             </div>
         </div>
+
     </div>
 </main>
 
-<!-- Floating Mobile Dock (Hanya muncul di perangkat mobile) -->
+<!-- Floating Mobile Dock -->
 <nav class="mobile-dock">
     <button class="dock-item active" onclick="showSection('home', this)">
         <svg viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -555,10 +522,6 @@
         <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         HO
     </button>
-    <button class="dock-item" onclick="showSection('section-curtain', this)">
-        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-        Curtain
-    </button>
     <button class="dock-item" onclick="showSection('section-guide', this)">
         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         Guide
@@ -566,14 +529,6 @@
 </nav>
 
 <script>
-    function openBoxLink() {
-        const selectElement = document.getElementById('categorySelect');
-        const selectedUrl = selectElement.value;
-        if (selectedUrl) {
-            window.open(selectedUrl, '_blank');
-        }
-    }
-
     function copyPassword() {
         const pwd = document.getElementById('pwdText').innerText;
         navigator.clipboard.writeText(pwd).then(() => {
@@ -618,6 +573,16 @@
             motivationCard.style.display = 'block';
             extraCard.style.display = 'block';
             cards.forEach(card => card.style.display = 'none');
+        } else if (sectionId === 'section-box') {
+            motivationCard.style.display = 'none';
+            extraCard.style.display = 'none';
+            cards.forEach(card => {
+                if (card.id === 'section-box' || card.id === 'section-box-aar') {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         } else {
             motivationCard.style.display = 'none';
             extraCard.style.display = 'none';
